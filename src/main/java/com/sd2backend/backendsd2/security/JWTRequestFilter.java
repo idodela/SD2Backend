@@ -24,7 +24,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
 
   // path prefixes that will be protected by the authentication filter
   private static final Set<String> SECURED_PATHS =
-    Set.of("/notginf");
+    Set.of("/users");
 
   @Override
   protected void doFilterInternal(HttpServletRequest req,

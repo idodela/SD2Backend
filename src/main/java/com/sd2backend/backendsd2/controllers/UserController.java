@@ -2,6 +2,7 @@ package com.sd2backend.backendsd2.controllers;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sd2backend.backendsd2.models.User;
+import com.sd2backend.backendsd2.models.UserType;
 import com.sd2backend.backendsd2.models.helper.AppconfigJ;
 import com.sd2backend.backendsd2.models.helper.AuthenticationException;
 import com.sd2backend.backendsd2.repositories.UserRepository;
@@ -59,16 +60,27 @@ public class UserController {
     }
 
 
-    @PostMapping("/users")
+    @PostMapping("")
     public ResponseEntity<Object> createUser(@RequestBody ObjectNode signupInfo) {
 
-        String id = signupInfo.get("iD") == null ? null : signupInfo.get("iD").asText();
-        String password = signupInfo.get("passWord") == null ? null : signupInfo.get("passWord").asText();
+        String id = signupInfo.get("id") == null ? null : signupInfo.get("id").asText();
+        String password = signupInfo.get("password") == null ? null : signupInfo.get("password").asText();
+        String name = signupInfo.get("name") == null ? null : signupInfo.get("name").asText();
+        String surname = signupInfo.get("surname") == null ? null : signupInfo.get("surname").asText();
+        String email = signupInfo.get("email") == null ? null : signupInfo.get("email").asText();
+        String role = signupInfo.get("role") == null ? null : signupInfo.get("role").asText();
 
         User user = new User();
 
+        assert role != null;
+        UserType userType = UserType.valueOf(role.toUpperCase());
+
         user.setId(id);
-        user.setPassword("Not yet");
+        user.setPassword(password);
+        user.setEmail(email);
+        user.setName(name);
+        user.setSurname(surname);
+        user.setUserType(userType);
 
 
         User savedUser = userRepository.save(user);
