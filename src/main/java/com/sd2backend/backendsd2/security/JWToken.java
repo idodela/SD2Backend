@@ -17,9 +17,9 @@ public class JWToken {
   public static final String JWT_NAME_CLAIM = "name";
   public static final String JWT_USERTYPE_CLAIM = "role";
 
-  private String username = null;
-  private String userId = null;
-  private String role = null;
+  private String username ;
+  private String userId ;
+  private String role ;
 
   public JWToken() {
   }
