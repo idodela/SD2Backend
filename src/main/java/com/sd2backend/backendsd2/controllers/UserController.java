@@ -68,7 +68,7 @@ public class UserController {
         String name = signupInfo.get("name") == null ? null : signupInfo.get("name").asText();
         String surname = signupInfo.get("surname") == null ? null : signupInfo.get("surname").asText();
         String email = signupInfo.get("email") == null ? null : signupInfo.get("email").asText();
-        String role = signupInfo.get("role") == null ? null : signupInfo.get("role").asText();
+        String role = signupInfo.get("userType") == null ? null : signupInfo.get("userType").asText();
 
         User user = new User();
 
@@ -90,9 +90,16 @@ public class UserController {
 
         return ResponseEntity.created(location).body(savedUser);
     }
-//
-//    @DeleteMapping("/{id}")
-//    public Resp
+
+    @DeleteMapping("/{id}")
+    public  String  deleteUser(@PathVariable String id){
+        User user = this.userRepository.findById(id);
+        this.userRepository.delete(user);
+
+        return "Delete successful";
+
+
+    }
 
 
 }

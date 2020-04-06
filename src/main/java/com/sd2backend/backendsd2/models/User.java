@@ -1,6 +1,9 @@
 package com.sd2backend.backendsd2.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -28,6 +31,10 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ArtId")
+    @JsonIgnore
+    private List<UserArt> userArts;
 
     public User() {
     }
