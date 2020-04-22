@@ -1,15 +1,16 @@
 package com.sd2backend.backendsd2.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.context.annotation.Primary;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "Art")
+@NamedQueries({
+        @NamedQuery(name = "find_all_arts", query = "SELECT a FROM Art a")
+})
+
 public class Art {
 
     @Id
@@ -21,22 +22,37 @@ public class Art {
 
     private double price ;
 
-    private String img;
+    @Column( columnDefinition="BLOB")
+    @Lob
+    private byte[] img;
 
+    @Type(type = "org.hibernate.type.NumericBooleanType")
     private boolean available;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userId")
-    @JsonIgnore
-    private List<User> users;
+
+    private String description;
+
+
 
     public Art() {
     }
 
-    public Art(String name, double price, String img, boolean available) {
+    public Art(String name, double price, byte[] img, boolean available, String description) {
         this.name = name;
         this.price = price;
         this.img = img;
         this.available = available;
+        this.description = description;
+    }
+
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getId() {
@@ -63,11 +79,11 @@ public class Art {
         this.price = price;
     }
 
-    public String getImg() {
+    public byte[] getImg() {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImg(byte[] img) {
         this.img = img;
     }
 
@@ -78,6 +94,7 @@ public class Art {
     public void setAvailable(boolean available) {
         this.available = available;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -91,4 +108,6 @@ public class Art {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
 }

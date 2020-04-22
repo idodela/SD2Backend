@@ -32,7 +32,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ArtId")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "art_id")
     @JsonIgnore
     private List<UserArt> userArts;
 
