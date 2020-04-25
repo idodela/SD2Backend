@@ -8,4 +8,6 @@ public interface ArtInterface {
     Art save(Art art, String userId);
 
     List<Art> findAll ();
+
+    List<Art> findArtsByUser(String userId);
 }

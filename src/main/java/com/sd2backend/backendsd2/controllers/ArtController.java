@@ -87,6 +87,12 @@ public class ArtController {
         return ResponseEntity.created(location).body(savedArt);
     }
 
+
+    @GetMapping("/userArts")
+    public List<Art> getUserArts(@RequestHeader(name="Authorization") String token){
+        return  this.artRepository.findArtsByUser(getUserIdFromToken(token));
+    }
+
     private static byte[] compressBytes(byte[] data) {
         Deflater deflater = new Deflater();
         deflater.setInput(data);

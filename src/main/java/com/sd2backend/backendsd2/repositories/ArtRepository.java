@@ -2,7 +2,6 @@ package com.sd2backend.backendsd2.repositories;
 
 import com.sd2backend.backendsd2.models.Art;
 import com.sd2backend.backendsd2.models.User;
-import com.sd2backend.backendsd2.models.UserArt;
 import com.sd2backend.backendsd2.repositories.interfaces.ArtInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,11 +25,13 @@ public class ArtRepository implements  ArtInterface {
     @Override
     public Art save(Art art, String userId) {
         User user = em.find(User.class, userId);
-        Art art1 = em.merge(art);
+
+        art.setUser_id(user);
+
+         em.merge(art);
 
 
-        UserArt userArt = new UserArt(user, art1);
-        em.merge(userArt);
+
         return art;
     }
 
@@ -39,6 +40,15 @@ public class ArtRepository implements  ArtInterface {
         TypedQuery<Art> namedQuery = em.createNamedQuery("find_all_arts", Art.class);
 
         return  namedQuery.getResultList();
+    }
+
+    @Override
+    public List<Art>findArtsByUser(String userId) {
+        User user = em.find(User.class, userId);
+        TypedQuery<Art> query = em.createQuery("SELECT a  FROM Art a WHERE a.User_id = :user", Art.class);
+        query.setParameter("user", user);
+
+        return query.getResultList();
     }
 
     private static byte[] decompressBytes(byte[] data) {
