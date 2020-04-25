@@ -29,6 +29,7 @@ public class LoanRepository implements LoanInterface {
 
         Art art = entityManager.find(Art.class, artId);
         art.setLoan_id(loanedArts);
+        art.setAvailable(false);
 
 
         entityManager.merge(loanedArts);

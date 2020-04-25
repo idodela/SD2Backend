@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class LoanController {
 
 
     @GetMapping("")
-    public List<Art> getLoanedArts(@RequestHeader(name = "Authorization") String token){
+    public List<Art> getLoanedArts(@RequestHeader(name = "Authorization") String token) throws IOException{
         return loanRepository.findLoanedArtsByUser(getUserIdFromToken(token));
     }
 
